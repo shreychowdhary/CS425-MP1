@@ -115,6 +115,7 @@ func HandleNode(node *Node, semaphore chan string) {
 
 	nodeInfo := strings.Fields(nodeHeader)
 	if len(nodeInfo) != 1 {
+		log.Println(nodeHeader)
 		log.Println("Incorrect node header")
 		return
 	}

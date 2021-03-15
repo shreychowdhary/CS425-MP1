@@ -15,8 +15,10 @@ for i in range(1,args.N+1):
     pid = subprocess.Popen("exec python3 -u gentx.py {} | ./node node{} 123{} ./config/{}config{} > output{}.txt".format(args.rate,i,i,args.N,i,i),shell=True)
     pids.append(pid)
 
-def compare_files():
-    for i in range(1,args.N):
+
+def compare_files(indicies):
+    for i in indicies:
+        print (i)
         file1 = "output{}.txt".format(i)
         file2 = "output{}.txt".format(i+1)
         same = filecmp.cmp(file1,file2,shallow=False)
@@ -29,12 +31,22 @@ def signal_handler(signal, frame):
     for pid in pids:
         pid.kill()
     time.sleep(.1)
-    if compare_files():
+    if compare_files(range(1,args.N+1)):
         print("SAME")
     else:
         print("WRONG")
     exit()
 
 signal.signal(signal.SIGINT, signal_handler)
-while True:
-    pass
+
+time.sleep(100)
+for pid in pids[:len(pids)//2]:
+    pid.kill()
+
+time.sleep(100)
+for pid in pids:
+    pid.kill()
+print(len(pids))
+print("SAME"+str(compare_files(range(1,args.N//2))))
+print("SAME"+str(compare_files(range(args.N//2,args.N))))
+exit()
