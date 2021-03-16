@@ -162,11 +162,6 @@ func HandleMessage(message string, node *Node) {
 		}
 
 	case '2':
-		//Write to some dictionary
-		//Change argument properly
-		//Check which values have been received
-		//If a node hasn't sent a value after 10 seconds remove it from nodes
-
 		seqNum := SequenceNumberFromString(messageBody)
 		responseManager.SetMaxSequenceNumber(messageId, *seqNum)
 		responseManager.AddResponder(messageId, node.Id)
