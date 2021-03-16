@@ -225,7 +225,7 @@ func HandleTranscation(transaction string, id string) {
 		}
 	}
 	balances := accounts.GetBalanceString()
-	printChannel <- fmt.Sprintf("%s:%s\n%s", id, transaction, balances)
+	printChannel <- fmt.Sprintf("%s\n%s", transaction, balances)
 }
 
 func SendTransactions(semaphore chan string, numNodes int) {
